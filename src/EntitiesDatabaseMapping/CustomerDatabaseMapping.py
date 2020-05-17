@@ -5,6 +5,9 @@ from src.DataSource.DatabaseGetData import DatabaseGetData
 from src.DataSource.DBExecuteSQL import DBExecuteSQL
 from src.DataSource.DataSourceConstants import *
 from src.Utilities.ErrorLogging import ErrorLogging
+from ConfigStub import ConfigStub
+from ConfigFromFile import ConfigFromFile
+
 
 class CustomerDatabaseMapping:
 
@@ -15,11 +18,19 @@ class CustomerDatabaseMapping:
     firstNamePosition = 1
     lastNamePosition = 2
     passwordPosition = 3
+    config = None
+
 
     dataSourceFields = ["emailAddress","firstName","lastName","password"]
 
     dbSetup = DBSetup()
     dataSource = DatabaseGetData()
+
+    def __init__(self,config=ConfigFromFile()):
+        self.config = config
+
+    def setConfig(self,config):
+        self.config = config
 
     def createCustomer(self, customerDetails):
         customer = Customer(
